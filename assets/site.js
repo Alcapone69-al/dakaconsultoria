@@ -57,14 +57,14 @@ function sc(){
 window.addEventListener('scroll',sc,{passive:true});
 window.addEventListener('resize',sc);
 
-/* ---- cópia por e-mail (FormSubmit) ---- */
-var MAILTO='geral@dakaconsultoria.com',lastMail='';
+/* ---- cópia por e-mail (Web3Forms) ---- */
+var W3KEY='7ea7ccce-5a82-4676-9a6d-85577a29edef',lastMail='';
 function mail(subject,fields){
   try{
     var key=subject+JSON.stringify(fields);if(key===lastMail)return;lastMail=key;
-    var b={_subject:subject,_template:'table',_captcha:'false',_honey:''};
+    var b={access_key:W3KEY,subject:subject,from_name:'Site DA-KA',botcheck:''};
     for(var k in fields)if(Object.prototype.hasOwnProperty.call(fields,k))b[k]=fields[k];
-    fetch('https://formsubmit.co/ajax/'+MAILTO,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(b),keepalive:true}).catch(function(){});
+    fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(b),keepalive:true}).catch(function(){});
   }catch(e){}
 }
 
