@@ -57,6 +57,17 @@ function sc(){
 window.addEventListener('scroll',sc,{passive:true});
 window.addEventListener('resize',sc);
 
+/* ---- cópia por e-mail (FormSubmit) ---- */
+var MAILTO='geral@dakaconsultoria.com',lastMail='';
+function mail(subject,fields){
+  try{
+    var key=subject+JSON.stringify(fields);if(key===lastMail)return;lastMail=key;
+    var b={_subject:subject,_template:'table',_captcha:'false',_honey:''};
+    for(var k in fields)if(Object.prototype.hasOwnProperty.call(fields,k))b[k]=fields[k];
+    fetch('https://formsubmit.co/ajax/'+MAILTO,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(b),keepalive:true}).catch(function(){});
+  }catch(e){}
+}
+
 /* ---- pedido de cotação ---- */
 var mode='link',img=null,ref=Math.floor(1000+Math.random()*9000);
 var HOME=!!$('fm');
@@ -127,6 +138,7 @@ if(HOME)send.addEventListener('click',function(e){
   er.textContent=m;
   if(m){e.preventDefault();return}
   relink();rd.hidden=false;
+  mail('Pedido de cotação DK-'+ref,{Referência:'DK-'+ref,Tipo:mode==='link'?'Link':'Foto (anexada no WhatsApp)',Link:mode==='link'?lk.value.trim():'-',Produto:ds.value.trim(),Quantidade:qt.value,Nome:nm.value.trim()||'-',WhatsApp:wp.value.trim()});
 });
 if(HOME){$('fm').addEventListener('submit',function(e){e.preventDefault()});pv();}
 
@@ -136,7 +148,7 @@ function clink(){
   var t='Olá DA-KA! '+(cn.value.trim()?'Sou '+cn.value.trim()+'. ':'')+(cm.value.trim()||'Gostaria de falar com a vossa equipa.');
   cwa.href='https://wa.me/'+NUM+'?text='+encodeURIComponent(t);
 }
-if(cn){cn.addEventListener('input',clink);cm.addEventListener('input',clink);clink();$('cf').addEventListener('submit',function(e){e.preventDefault()});}
+if(cn){cn.addEventListener('input',clink);cm.addEventListener('input',clink);clink();cwa.addEventListener('click',function(){mail('Mensagem do site',{Nome:cn.value.trim()||'-',Mensagem:cm.value.trim()||'-'})});$('cf').addEventListener('submit',function(e){e.preventDefault()});}
 
 sc();
 })();
