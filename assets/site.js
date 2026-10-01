@@ -3,7 +3,7 @@
 "use strict";
 var $=function(i){return document.getElementById(i)};
 var RM=window.matchMedia?matchMedia('(prefers-reduced-motion:reduce)').matches:false;
-var NUM='258873891176';
+var NUM='258823852102';
 
 /* ---- ticker ---- */
 var P=['Eletrónica','Roupa e calçado','Peças auto','Mobiliário','Cosméticos','Ferramentas','Brinquedos','Material de construção','Material de escritório','Decoração'];
