@@ -240,6 +240,19 @@ textarea{resize:vertical}
 .cl b{display:block;font:700 26px/1 var(--d);text-transform:uppercase}
 .cl span{color:var(--mut);font-size:15px}
 .sub{font:700 22px var(--d);letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px}
+
+/* ---------- parceiros: fotos em frame com legenda ---------- */
+.gal{display:grid;gap:14px}
+.g2c{grid-template-columns:repeat(2,1fr)}
+.g3c{grid-template-columns:repeat(3,1fr)}
+.fr{margin:0;background:var(--surface);border:1px solid var(--line);padding:8px}
+.fi{overflow:hidden;background:var(--line);aspect-ratio:4/3}
+.fi img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.fr:hover .fi img{transform:scale(1.04)}
+.fr figcaption{padding:10px 4px 4px;font-size:14px;line-height:1.35;color:var(--mut)}
+.fr figcaption b{color:var(--ink);font:700 17px var(--d);letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:640px){.g2c,.g3c{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.fi img{transition:none}.fr:hover .fi img{transform:none}}
 .chips{display:flex;gap:10px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
 .chips li{border:1.5px solid var(--ink);padding:9px 18px;font-weight:600}
 
