@@ -150,5 +150,23 @@ function clink(){
 }
 if(cn){cn.addEventListener('input',clink);cm.addEventListener('input',clink);clink();cwa.addEventListener('click',function(){mail('Mensagem do site',{Nome:cn.value.trim()||'-',Mensagem:cm.value.trim()||'-'})});$('cf').addEventListener('submit',function(e){e.preventDefault()});}
 
+/* ---- aberto agora / fechado (hora de Maputo, UTC+2) ---- */
+var HR={1:[[480,720],[840,1020]],2:[[480,720],[840,1020]],3:[[480,720],[840,1020]],4:[[480,720],[840,1020]],5:[[480,720],[840,1020]],6:[[540,810]]};
+var DIAS=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+function hh(m){var h=Math.floor(m/60),r=m%60;return h+'h'+(r?(r<10?'0':'')+r:'')}
+function estado(){
+  var t=new Date(Date.now()+2*3600000),d=t.getUTCDay(),m=t.getUTCHours()*60+t.getUTCMinutes(),s=HR[d]||[],i,k,n;
+  for(i=0;i<s.length;i++)if(m>=s[i][0]&&m<s[i][1])return{on:true,txt:'Aberto agora · fecha às '+hh(s[i][1])};
+  for(i=0;i<s.length;i++)if(m<s[i][0])return{on:false,txt:'Fechado · abre hoje às '+hh(s[i][0])};
+  for(k=1;k<=7;k++){n=(d+k)%7;if(HR[n])return{on:false,txt:'Fechado · abre '+(k===1?'amanhã':DIAS[n])+' às '+hh(HR[n][0][0])}}
+  return null;
+}
+var abs=[].slice.call(document.querySelectorAll('[data-aberto]'));
+function aberto(){
+  var e=estado();
+  abs.forEach(function(el){if(!e){el.hidden=true;return}el.textContent=e.txt;el.className='aberto'+(e.on?' on':'');el.hidden=false});
+}
+if(abs.length){aberto();setInterval(aberto,60000)}
+
 sc();
 })();
